@@ -1,5 +1,5 @@
 /**
- * vite.config.js
+ * vite.config.ts
  * Vite configuration for the p5.js boilerplate
  *
  * Dependencies: vite

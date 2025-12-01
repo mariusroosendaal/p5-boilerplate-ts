@@ -1,32 +1,37 @@
 /**
- * sketch.js
+ * sketch.ts
  * Primary p5 sketch that renders a looping geometric pattern
  *
- * Dependencies: p5.js, constants.js
+ * Dependencies: p5.js, constants.ts
  * Exports: createSketch()
  */
-import { CANVAS_DIMENSIONS, COLOR_PALETTE } from './constants.js';
+import type p5 from "p5";
+import { CANVAS_DIMENSIONS, COLOR_PALETTE } from "./constants";
+
+type SketchInitializer = (p: p5) => void;
 
 /**
  * Creates the configured sketch function for p5 instance mode.
- * @returns {(p: import('p5')) => void}
+ * @returns {SketchInitializer}
  */
-export function createSketch() {
+export function createSketch(): SketchInitializer {
   const columns = 8;
   const rows = 8;
   const cellSize = CANVAS_DIMENSIONS.width / columns;
 
-  return (p) => {
+  return (p: p5) => {
     let tick = 0;
 
     p.setup = () => {
-      p.createCanvas(CANVAS_DIMENSIONS.width, CANVAS_DIMENSIONS.height).parent('app');
+      p.createCanvas(CANVAS_DIMENSIONS.width, CANVAS_DIMENSIONS.height).parent(
+        "app",
+      );
       p.noiseSeed(Math.random() * 1_000_000);
       p.noStroke();
     };
 
     p.draw = () => {
-      p.background('#030712');
+      p.background("#030712");
       tick += 0.01;
 
       for (let y = 0; y < rows; y += 1) {
