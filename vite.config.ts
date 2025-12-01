@@ -2,11 +2,14 @@
  * vite.config.ts
  * Vite configuration for the p5.js boilerplate
  *
- * Dependencies: vite
+ * Dependencies: vitest/config
  * Exports: defineConfig()
  */
-import { defineConfig } from 'vite';
+import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-  base: './'
+  base: "./",
+  test: {
+    environment: "jsdom",
+  },
 });

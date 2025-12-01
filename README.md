@@ -25,6 +25,7 @@ The dev server prints a local URL (typically `http://localhost:5173`). Edit any 
 | `npm run preview` | Serves the production build locally |
 | `npm run lint` | Runs ESLint and checks Prettier formatting in `src/` |
 | `npm run prettier` | Formats files under `src/` with Prettier |
+| `npm test` | Runs the Vitest suite once inside a jsdom environment |
 
 ## Project Structure
 
@@ -48,6 +49,21 @@ The dev server prints a local URL (typically `http://localhost:5173`). Edit any 
 ## Production Build
 
 Run `npm run build`, then deploy the `dist/` directory to any static host (Vercel, Netlify, GitHub Pages, etc). Use `npm run preview` to verify production output locally.
+
+## Testing
+
+This starter uses [Vitest](https://vitest.dev/) with the jsdom environment to exercise sketch helpers without launching a browser. Add `.test.ts` files under `test/` (or inside `src/`) and run:
+
+```bash
+npm test           # single run
+npx vitest watch   # optional watch mode during development
+```
+
+Current coverage validates that the sketch respects `CANVAS_DIMENSIONS`; extend these tests as you add stateful or math-heavy modules.
+
+## Continuous Integration
+
+A GitHub Actions workflow (`.github/workflows/ci.yml`) runs on every push and pull request. It installs dependencies with `npm ci`, runs linting, executes the Vitest suite, and builds the project to catch regressions early.
 
 ## Updating This Boilerplate
 
