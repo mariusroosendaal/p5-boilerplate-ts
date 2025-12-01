@@ -23,6 +23,8 @@ The dev server prints a local URL (typically `http://localhost:5173`). Edit any 
 | `npm run dev` | Starts Vite in development mode with HMR |
 | `npm run build` | Outputs a production build into `dist/` |
 | `npm run preview` | Serves the production build locally |
+| `npm run lint` | Runs ESLint and checks Prettier formatting in `src/` |
+| `npm run prettier` | Formats files under `src/` with Prettier |
 
 ## Project Structure
 
