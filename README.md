@@ -43,7 +43,7 @@ The dev server prints a local URL (typically `http://localhost:5173`). Edit any 
 
 - Add new helpers/modules under `src/` and import them from `sketch.ts`—keep `main.ts` for orchestration only.
 - Use instance mode: export `createSketch()` from `sketch.ts` and let `main.ts` handle instantiation + HMR cleanup.
-- Centralize tweakable values inside `constants.ts` for easier reuse, documentation, and AGENT checklist compliance.
+- Centralize tweakable values inside `constants.ts` for easier reuse, documentation, and AGENTS checklist compliance.
 
 ## Production Build
 
