@@ -19,6 +19,10 @@ export function createSketch(): SketchInitializer {
     let tick = 0;
     const centerX = CANVAS_DIMENSIONS.width / 2;
     const centerY = CANVAS_DIMENSIONS.height / 2;
+    // Use specific colors from palette for each layer
+    const layer1Color = COLOR_PALETTE[0];
+    const layer2Color = COLOR_PALETTE[2];
+    const layer3Color = COLOR_PALETTE[4];
 
     p.setup = () => {
       p.createCanvas(CANVAS_DIMENSIONS.width, CANVAS_DIMENSIONS.height).parent(
@@ -35,7 +39,7 @@ export function createSketch(): SketchInitializer {
       // Layer 1: 4 rotation-symmetrical squares
       p.push();
       p.blendMode(p.MULTIPLY);
-      p.fill(COLOR_PALETTE[0]);
+      p.fill(layer1Color);
       p.translate(centerX, centerY);
       for (let i = 0; i < 4; i += 1) {
         p.push();
@@ -50,7 +54,7 @@ export function createSketch(): SketchInitializer {
       // Layer 2: One large circle
       p.push();
       p.blendMode(p.MULTIPLY);
-      p.fill(COLOR_PALETTE[2]);
+      p.fill(layer2Color);
       const circleSize = 400 + p.noise(tick + 100) * 100;
       p.circle(centerX, centerY, circleSize);
       p.pop();
@@ -58,7 +62,7 @@ export function createSketch(): SketchInitializer {
       // Layer 3: Triangle stack
       p.push();
       p.blendMode(p.MULTIPLY);
-      p.fill(COLOR_PALETTE[4]);
+      p.fill(layer3Color);
       const triangleCount = 5;
       for (let i = 0; i < triangleCount; i += 1) {
         const size = 150 - i * 25 + p.noise(tick + i * 10) * 20;
