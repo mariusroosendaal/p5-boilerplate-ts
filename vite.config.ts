@@ -8,7 +8,7 @@
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-  base: "./",
+  base: "/p5-boilerplate-ts/",
   test: {
     environment: "jsdom",
   },
