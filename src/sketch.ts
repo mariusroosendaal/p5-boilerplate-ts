@@ -25,6 +25,9 @@ export function createSketch(): SketchInitializer {
     shapes: string[];
     sizes: number[];
     colors: string[];
+    numCircles: number[];
+    arcAngles: number[];
+    wedgeAngles: number[];
   }[] = [];
 
   return (p: p5) => {
@@ -69,7 +72,34 @@ export function createSketch(): SketchInitializer {
           colors.push(p.random(COLOR_PALETTE));
         }
 
-        cellConfigs.push({ symmetry, shapes, sizes, colors });
+        // Pre-generate random parameters for drawing functions
+        const numCircles = [
+          p.floor(p.random(2, 4)),
+          p.floor(p.random(2, 4)),
+          p.floor(p.random(2, 4)),
+        ];
+        const arcAngleOptions = [p.PI / 2, p.PI / 3, p.PI / 4];
+        const arcAngles = [
+          p.random(arcAngleOptions),
+          p.random(arcAngleOptions),
+          p.random(arcAngleOptions),
+        ];
+        const wedgeAngleOptions = [p.PI / 3, p.PI / 4, p.PI / 6];
+        const wedgeAngles = [
+          p.random(wedgeAngleOptions),
+          p.random(wedgeAngleOptions),
+          p.random(wedgeAngleOptions),
+        ];
+
+        cellConfigs.push({
+          symmetry,
+          shapes,
+          sizes,
+          colors,
+          numCircles,
+          arcAngles,
+          wedgeAngles,
+        });
       }
     };
 
@@ -98,6 +128,9 @@ export function createSketch(): SketchInitializer {
               config.symmetry,
               size * cellSize * 0.4,
               color,
+              config.numCircles[shapeIdx % config.numCircles.length],
+              config.arcAngles[shapeIdx % config.arcAngles.length],
+              config.wedgeAngles[shapeIdx % config.wedgeAngles.length],
             );
           });
 
@@ -119,6 +152,9 @@ function drawSymmetricShape(
   symmetry: number,
   size: number,
   color: string,
+  numCircles: number,
+  arcAngle: number,
+  wedgeAngle: number,
 ): void {
   const angle = p.TWO_PI / symmetry;
 
@@ -130,16 +166,16 @@ function drawSymmetricShape(
 
     switch (shapeType) {
       case "circles":
-        drawConcentricCircles(p, size);
+        drawConcentricCircles(p, size, numCircles);
         break;
       case "bars":
         drawRotatedBar(p, size);
         break;
       case "arcs":
-        drawArc(p, size);
+        drawArc(p, size, arcAngle);
         break;
       case "wedges":
-        drawWedge(p, size);
+        drawWedge(p, size, wedgeAngle);
         break;
       case "spokes":
         drawSpoke(p, size);
@@ -156,8 +192,7 @@ function drawSymmetricShape(
 /**
  * Draw concentric circles
  */
-function drawConcentricCircles(p: p5, size: number): void {
-  const numCircles = p.floor(p.random(2, 4));
+function drawConcentricCircles(p: p5, size: number, numCircles: number): void {
   for (let i = 0; i < numCircles; i++) {
     const r = size * (1 - i * 0.3);
     p.circle(0, 0, r);
@@ -176,18 +211,17 @@ function drawRotatedBar(p: p5, size: number): void {
 /**
  * Draw a circular arc
  */
-function drawArc(p: p5, size: number): void {
+function drawArc(p: p5, size: number, arcAngle: number): void {
   const startAngle = 0;
-  const endAngle = p.random([p.PI / 2, p.PI / 3, p.PI / 4]);
+  const endAngle = arcAngle;
   p.arc(0, 0, size, size, startAngle, endAngle, p.PIE);
 }
 
 /**
  * Draw a wedge (pie slice)
  */
-function drawWedge(p: p5, size: number): void {
-  const angle = p.random([p.PI / 3, p.PI / 4, p.PI / 6]);
-  p.arc(0, 0, size, size, -angle / 2, angle / 2, p.PIE);
+function drawWedge(p: p5, size: number, wedgeAngle: number): void {
+  p.arc(0, 0, size, size, -wedgeAngle / 2, wedgeAngle / 2, p.PIE);
 }
 
 /**
