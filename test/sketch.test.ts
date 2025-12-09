@@ -14,6 +14,8 @@ describe("createSketch", () => {
   let parentSpy: ReturnType<typeof vi.fn>;
   let pStub: p5;
 
+  const DEFAULT_SYMMETRY = 4;
+
   beforeEach(() => {
     document.body.innerHTML = '<div id="app"></div>';
     parentSpy = vi.fn();
@@ -33,7 +35,23 @@ describe("createSketch", () => {
       pop: vi.fn(),
       stroke: vi.fn(),
       noFill: vi.fn(),
+      randomSeed: vi.fn(),
+      random: vi.fn((arg) => {
+        if (Array.isArray(arg)) return arg[0];
+        if (typeof arg === "number") return arg;
+        return DEFAULT_SYMMETRY;
+      }),
+      floor: vi.fn((n) => Math.floor(n)),
+      translate: vi.fn(),
+      rotate: vi.fn(),
+      rect: vi.fn(),
+      arc: vi.fn(),
+      noLoop: vi.fn(),
       SCREEN: 1,
+      MULTIPLY: 2,
+      TWO_PI: Math.PI * 2,
+      PI: Math.PI,
+      PIE: "pie",
     } as unknown as p5;
   });
 
