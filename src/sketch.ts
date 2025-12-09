@@ -10,6 +10,8 @@ import { CANVAS_DIMENSIONS, COLOR_PALETTE } from "./constants";
 
 type SketchInitializer = (p: p5) => void;
 
+const RANDOM_SEED = 42;
+
 /**
  * Creates the configured sketch function for p5 instance mode.
  * @returns {SketchInitializer}
@@ -36,7 +38,7 @@ export function createSketch(): SketchInitializer {
         "app",
       );
       p.noStroke();
-      p.randomSeed(42); // Fixed seed for consistent results
+      p.randomSeed(RANDOM_SEED); // Fixed seed for consistent results
 
       // Generate unique configuration for each cell
       for (let i = 0; i < rows * columns; i++) {

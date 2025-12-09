@@ -14,6 +14,8 @@ describe("createSketch", () => {
   let parentSpy: ReturnType<typeof vi.fn>;
   let pStub: p5;
 
+  const DEFAULT_SYMMETRY = 4;
+
   beforeEach(() => {
     document.body.innerHTML = '<div id="app"></div>';
     parentSpy = vi.fn();
@@ -37,7 +39,7 @@ describe("createSketch", () => {
       random: vi.fn((arg) => {
         if (Array.isArray(arg)) return arg[0];
         if (typeof arg === "number") return arg;
-        return 4;
+        return DEFAULT_SYMMETRY;
       }),
       floor: vi.fn((n) => Math.floor(n)),
       translate: vi.fn(),
