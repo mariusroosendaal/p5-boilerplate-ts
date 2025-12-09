@@ -33,7 +33,14 @@ describe("createSketch", () => {
       pop: vi.fn(),
       stroke: vi.fn(),
       noFill: vi.fn(),
-      SCREEN: 1,
+      translate: vi.fn(),
+      rotate: vi.fn(),
+      rect: vi.fn(),
+      rectMode: vi.fn(),
+      triangle: vi.fn(),
+      TWO_PI: Math.PI * 2,
+      CENTER: 1,
+      MULTIPLY: 2,
     } as unknown as p5;
   });
 
