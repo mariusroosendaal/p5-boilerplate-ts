@@ -40,7 +40,7 @@ describe("createSketch", () => {
       strokeWeight: vi.fn(),
       rectMode: vi.fn(),
       rect: vi.fn(),
-      color: vi.fn((c: string) => ({
+      color: vi.fn(() => ({
         setAlpha: vi.fn(),
       })),
       SCREEN: 1,
