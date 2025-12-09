@@ -15,12 +15,10 @@ type SketchInitializer = (p: p5) => void;
  * @returns {SketchInitializer}
  */
 export function createSketch(): SketchInitializer {
-  const columns = 8;
-  const rows = 8;
-  const cellSize = CANVAS_DIMENSIONS.width / columns;
-
   return (p: p5) => {
     let tick = 0;
+    const centerX = CANVAS_DIMENSIONS.width / 2;
+    const centerY = CANVAS_DIMENSIONS.height / 2;
 
     p.setup = () => {
       p.createCanvas(CANVAS_DIMENSIONS.width, CANVAS_DIMENSIONS.height).parent(
@@ -34,29 +32,47 @@ export function createSketch(): SketchInitializer {
       p.background("#030712");
       tick += 0.01;
 
-      for (let y = 0; y < rows; y += 1) {
-        for (let x = 0; x < columns; x += 1) {
-          const idx = (x + y) % COLOR_PALETTE.length;
-          const color = COLOR_PALETTE[idx];
-          const cx = x * cellSize + cellSize / 2;
-          const cy = y * cellSize + cellSize / 2;
-          const noiseOffset = p.noise(x * 0.2, y * 0.2, tick);
-          const radius = cellSize * 0.35 + noiseOffset * cellSize * 0.15;
-
-          // Draw layered circles with additive blending for softness
-          p.push();
-          p.blendMode(p.SCREEN);
-          p.fill(color);
-          p.circle(cx, cy, radius);
-          p.pop();
-
-          p.push();
-          p.stroke(255, 255, 255, 35);
-          p.noFill();
-          p.circle(cx, cy, radius * 1.4);
-          p.pop();
-        }
+      // Layer 1: 4 rotation-symmetrical squares
+      p.push();
+      p.blendMode(p.MULTIPLY);
+      p.fill(COLOR_PALETTE[0]);
+      p.translate(centerX, centerY);
+      for (let i = 0; i < 4; i += 1) {
+        p.push();
+        p.rotate((p.TWO_PI / 4) * i + tick);
+        const squareSize = 200 + p.noise(tick) * 50;
+        p.rectMode(p.CENTER);
+        p.rect(150, 0, squareSize, squareSize);
+        p.pop();
       }
+      p.pop();
+
+      // Layer 2: One large circle
+      p.push();
+      p.blendMode(p.MULTIPLY);
+      p.fill(COLOR_PALETTE[2]);
+      const circleSize = 400 + p.noise(tick + 100) * 100;
+      p.circle(centerX, centerY, circleSize);
+      p.pop();
+
+      // Layer 3: Triangle stack
+      p.push();
+      p.blendMode(p.MULTIPLY);
+      p.fill(COLOR_PALETTE[4]);
+      const triangleCount = 5;
+      for (let i = 0; i < triangleCount; i += 1) {
+        const size = 150 - i * 25 + p.noise(tick + i * 10) * 20;
+        const yOffset = centerY - 100 + i * 40;
+        p.triangle(
+          centerX - size / 2,
+          yOffset + size / 2,
+          centerX + size / 2,
+          yOffset + size / 2,
+          centerX,
+          yOffset - size / 2,
+        );
+      }
+      p.pop();
     };
   };
 }
