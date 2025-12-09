@@ -24,6 +24,10 @@ describe("createSketch", () => {
       createCanvas: vi.fn(() => canvasStub),
       noiseSeed: vi.fn(),
       noStroke: vi.fn(),
+      noLoop: vi.fn(),
+      randomSeed: vi.fn(),
+      random: vi.fn(() => 0.5),
+      floor: vi.fn((n: number) => Math.floor(n)),
       background: vi.fn(),
       noise: vi.fn(() => 0),
       push: vi.fn(),
@@ -33,7 +37,14 @@ describe("createSketch", () => {
       pop: vi.fn(),
       stroke: vi.fn(),
       noFill: vi.fn(),
+      strokeWeight: vi.fn(),
+      rectMode: vi.fn(),
+      rect: vi.fn(),
+      color: vi.fn(() => ({
+        setAlpha: vi.fn(),
+      })),
       SCREEN: 1,
+      CENTER: 0,
     } as unknown as p5;
   });
 

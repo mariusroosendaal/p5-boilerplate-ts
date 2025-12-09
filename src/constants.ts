@@ -12,10 +12,14 @@ export const CANVAS_DIMENSIONS = Object.freeze({
   height: 640,
 });
 
+// Karel Martens-inspired color palette - bold, modernist colors
 export const COLOR_PALETTE = Object.freeze([
-  "#0d1b2a",
-  "#1b263b",
-  "#415a77",
-  "#778da9",
-  "#e0e1dd",
+  "#E63946", // Red
+  "#F1C40F", // Yellow
+  "#3498DB", // Blue
+  "#2ECC71", // Green
+  "#9B59B6", // Purple
+  "#E67E22", // Orange
+  "#1ABC9C", // Turquoise
+  "#34495E", // Dark Gray
 ]);
