@@ -13,9 +13,8 @@ export const CANVAS_DIMENSIONS = Object.freeze({
 });
 
 export const COLOR_PALETTE = Object.freeze([
-  "#0d1b2a",
-  "#1b263b",
-  "#415a77",
-  "#778da9",
-  "#e0e1dd",
+  "#FFFF00", // Yellow
+  "#FF0000", // Red
+  "#00FF00", // Green
+  "#0000FF", // Blue
 ]);
